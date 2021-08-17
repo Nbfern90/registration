@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            background-color: grey;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .container {
+            height: 800px;
+            width: 1000px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .register-container {
+            display: flex;
+            background-color: green;
+            border: 2px solid green;
+        }
+
+        .register {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .register label {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .btn-1 {
+            height: 40px;
+            font-size: 20px;
+            width: 100px;
+        }
+
+        #first_name,
+        #last_name,
+        #password,
+        #confirm_password,
+        #email {
+            height: 25px;
+            width: 400px;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: space-around;
+            background-color: green;
+            border: 2px solid green;
+            height: 200px;
+
+        }
+
+        .login {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+
+        }
+
+        .login label {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .email,
+        .password {
+            height: 25px;
+            width: 400px;
+        }
+
+        .btn-2 {
+            height: 40px;
+            font-size: 20px;
+            width: 100px;
+        }
+
+        h1 {
+            border-bottom: solid black 2px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="register-container">
+            <form action="/register" method="POST" class="register">
+                <h1>Register</h1>
+                {% with messages = get_flashed_messages() %}
+                <!-- declare a variable called messages -->
+                {% if messages %}
+                <!-- check if there are any messages -->
+                {% for message in messages %}
+                <!-- loop through the messages -->
+                <p>{{message}}</p> <!-- display each message in a paragraph tag -->
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <label for="first_name">First Name</label>
+                <input type="text" name="first_name" id="first_name">
+                <label for="last_name">Last Name</label>
+                <input type="text" name="last_name" id="last_name">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password">
+                <label for="email">E-mail</label>
+                <input type="email" name="email" id="email">
+                <input type="submit" value="Register" class="btn-1">
+            </form>
+        </div>
+        <div class="login-container">
+            <form action="/process_login" method="POST" class="login">
+                <h1>Login</h1>
+                {% with messages = get_flashed_messages(category_filter=['register']) %}
+                {% if messages %}
+
+                <p>Please Complete Required Fields.</p>
+                {% for message in messages %}
+                <p>{{message}}</p>
+                {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <label for="email">Email: </label>
+        <input type="text" name="email" id="email" class="email">
+        <label for="password">Password: </label>
+        <input type="password" name="password" class="password" id="password">
+
+        <input type="submit" value="Login" class="btn-2">
+        </form>
+    </div>
+
+    </div>
+</body>
+
+</html>
