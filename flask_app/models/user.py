@@ -41,7 +41,11 @@ class User:
     @staticmethod
     def validate_user(user):
         is_valid = True
-
+        query = "SELECT * FROM user WHERE email = %(email)s;"
+        results = connectToMySQL('registration').query_db(query, user)
+        if len(results) >= 1:
+            flash("Email already exists; choose another")
+            is_valid = False
         if len(user['first_name']) < 2:
             flash("First name must be greater than 2 characters.")
             is_valid = False
